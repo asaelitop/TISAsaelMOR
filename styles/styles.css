@@ -1,0 +1,173 @@
+/* Importa una fuente personalizada de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* --- Estilos generales --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50; /* Un verde agradable */
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #555;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* --- Sección para la descripción --- */
+p {
+    text-align: justify;
+    padding: 0 20px;
+    font-size: 1.1em;
+}
+
+/* --- Imágenes y enlaces --- */
+img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ... (el resto de tu CSS anterior) ... */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    /* Aumenta el ancho mínimo a 180px para dar más espacio al texto */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px; /* Mantiene un espacio de 15px entre los elementos */
+    margin-top: 20px;
+}
+
+
+ul li a {
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 10px; /* Reduje el padding horizontal ligeramente para ahorrar espacio */
+    border-radius: 8px;
+    transition: transform 0.2s, background-color 0.2s;
+    font-weight: 600;
+    text-align: center; /* Centra el texto en cada botón */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta cualquier texto que sobresalga si es inevitable */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto se corta */
+    display: block; /* Asegura que el enlace ocupe todo el espacio de la celda de la cuadrícula */
+}
+
+ul li a:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+}
+/* --- Tabla de miembros del equipo --- */
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table tr:first-child td {
+    border-bottom: none;
+}
+
+td {
+    padding: 15px;
+}
+
+td img {
+    border-radius: 50%;
+    border: 3px solid #4CAF50;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+table tr:last-child td {
+    font-weight: 300;
+    font-style: italic;
+    color: #777;
+}
+
+/* --- Estilos para Formularios --- */
+form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre cada campo del formulario */
+}
+
+form li {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
+    transition: border-color 0.3s;
+}
+
+form input:focus,
+form select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}

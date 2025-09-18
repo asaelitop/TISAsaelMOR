@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Datos - Inventario</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="./../modulos_individuales/inventario.html">[Inventario]</a>
+
+        <h1>Diseño de la base de datos del Módulo</h1>
+
+        <h2>Diagrama de la base de datos</h2>
+        <img src="./../assets/TBD_Inventario.png" alt="Diagrama de la base de datos" width="700">
+
+        <h2>Descripción de Pertinencia de la Arquitectura de la Base de Datos</h2>
+        <p>La base de datos ha sido diseñada siguiendo las primeras tres formas normales (1NF, 2NF, 3NF) para garantizar la organización y consistencia de los datos.</p>
+
+        <h3>Tabla Inventario</h3>
+        <ul>
+            <li><strong>Id_producto:</strong> <code>int</code>. Clave primaria única. No permite valores nulos.</li>
+            <li><strong>Descripcion:</strong> <code>nvarchar(150)</code>. Texto para describir el producto.</li>
+            <li><strong>Tipo:</strong> <code>nvarchar(50)</code>. Clasificación del producto.</li>
+            <li><strong>Cantidad:</strong> <code>int</code>. Número de unidades en inventario.</li>
+            <li><strong>Peso:</strong> <code>decimal(10, 2)</code>. Almacena el peso del producto. Permite nulos.</li>
+            <li><strong>Precio_venta:</strong> <code>decimal(10, 2)</code>. Precio de venta al público.</li>
+            <li><strong>Precio_compra:</strong> <code>decimal(10, 2)</code>. Costo de adquisición. Permite nulos.</li>
+            <li><strong>Caducidad:</strong> <code>date</code>. Fecha de caducidad. Permite nulos.</li>
+            <li><strong>Marca:</strong> <code>nvarchar(50)</code>. Nombre de la marca. Permite nulos.</li>
+            <li><strong>Id_proveedor:</strong> <code>int</code>. Clave foránea que relaciona un producto con un proveedor. Permite nulos.</li>
+        </ul>
+
+        <h2>Normalización de la Base de Datos</h2>
+
+        <h3>1NF (Primera Forma Normal)</h3>
+        <p>Cumple con la 1FN porque cada tabla tiene un identificador único (clave primaria) y los datos en cada columna son atómicos.
+            <ul>
+                <li><strong>Tabla de Productos:</strong> <code>ID_producto</code> es la clave primaria y todos los campos como <code>Descripcion</code>, <code>Cantidad</code> y <code>Precio_venta</code> contienen un solo valor.</li>
+                <li><strong>Tabla de Proveedores:</strong> <code>Id_proveedor</code> es la clave principal y los atributos como <code>Nombre</code>, <code>RFC</code> y <code>Telefono</code> son atómicos.</li>
+            </ul>
+        </p>
+
+        <h3>2NF (Segunda Forma Normal)</h3>
+        <p>La base de datos cumple con la 2FN porque todos los atributos no clave dependen completamente de la clave primaria. Dado que ninguna de las tablas tiene una clave primaria compuesta, la condición se satisface.
+            <ul>
+                <li><strong>Tabla de Productos:</strong> Todos los atributos no clave, como <code>Descripcion</code>, <code>Precio_venta</code> y <code>Marca</code>, dependen enteramente de <code>ID_producto</code>.</li>
+                <li><strong>Tabla de Proveedores:</strong> Cada atributo no clave, como <code>Nombre</code> y <code>RFC</code>, depende completamente de la clave primaria <code>Id_proveedor</code>.</li>
+            </ul>
+        </p>
+
+        <h3>3NF (Tercera Forma Normal)</h3>
+        <p>La base de datos cumple con la 3FN ya que no tiene dependencias transitivas. La información del proveedor no está duplicada en la tabla Productos; en su lugar, se utiliza la clave foránea <code>Id_proveedor</code> para la relación.</p>
+
+        <h2>Código SQL para crear la base de datos y tablas</h2>
+        <pre><code>
+-- Crear la base de datos y seleccionarla
+CREATE DATABASE Cafeteria;
+USE Cafeteria;
+
+-- Tabla de Proveedores
+CREATE TABLE Proveedores (
+    Id_proveedor INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre      NVARCHAR(100) NOT NULL,
+    RFC          VARCHAR(15),
+    Telefono     VARCHAR(20),
+    Foto_id      NVARCHAR(200) -- Aquí puedes guardar ruta/URL de la foto
+);
+
+-- Tabla de Productos
+CREATE TABLE Productos (
+    ID_producto  INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion  NVARCHAR(150) NOT NULL,
+    Tipo         NVARCHAR(50) NOT NULL,   -- Ej: Bebida, Ingrediente
+    Cantidad     INT NOT NULL,
+    Peso         DECIMAL(10,2),
+    Precio_venta DECIMAL(10,2) NOT NULL,
+    Precio_compra DECIMAL(10,2),
+    Caducidad    DATE,
+    Marca        NVARCHAR(50),
+    Id_proveedor INT,
+    FOREIGN KEY (Id_proveedor) REFERENCES Proveedores(Id_proveedor)
+);
+        </code></pre>
+
+        <h2>Código SQL para agregar registros a las tablas</h2>
+
+        <h3>Registros de la tabla proveedores</h3>
+        <pre><code>
+-- Insertar datos en la tabla Proveedores
+-- SQL Server asignará automáticamente un Id_proveedor (1, 2, 3, etc.)
+INSERT INTO Proveedores (Nombre, RFC, Telefono, Foto_id)
+VALUES
+('Distribuidora El Sol', 'DEL20250917ABC', '5512345678', 'fotos/proveedor_sol.jpg'),
+('Alimentos Frescos S.A.', 'AFR20250917XYZ', '5587654321', 'fotos/proveedor_frescos.png'),
+('Lácteos Puros', 'LAP20250917JKL', '5555555555', 'fotos/proveedor_lacteos.jpg'),
+('Granos y Cereales', 'GYC20250917QWE', '5511223344', NULL);
+        </code></pre>
+
+        <h3>Registros de la tabla productos</h3>
+        <pre><code>
+-- Insertar datos en la tabla Productos
+-- Los Id_proveedor referenciados (1, 2, 3, etc.) deben existir en la tabla Proveedores
+INSERT INTO Productos (Descripcion, Tipo, Cantidad, Peso, Precio_venta, Precio_compra, Caducidad, Marca, Id_proveedor)
+VALUES
+('Coca-Cola 600ml', 'Bebida', 100, 0.60, 15.00, 8.50, '2026-03-31', 'Coca-Cola', 1),
+('Leche entera 1L', 'Ingrediente', 50, 1.05, 25.50, 18.00, '2025-12-25', 'Lala', 3),
+('Harina de trigo 1kg', 'Ingrediente', 75, 1.00, 30.00, 22.00, '2026-06-15', 'Tres Estrellas', 2),
+('Jugo de Naranja 500ml', 'Bebida', 120, 0.50, 12.00, 6.75, '2026-02-10', 'Del Valle', 1),
+('Frijol negro 900g', 'Ingrediente', 90, 0.90, 28.50, 19.50, '2027-01-20', 'La Costeña', 4),
+('Yogurt natural 1kg', 'Ingrediente', 40, 1.00, 35.00, 25.00, '2025-11-05', 'Danone', 3),
+('Agua embotellada 1L', 'Bebida', 200, 1.00, 10.00, 5.00, NULL, 'Bonafont', 1);
+        </code></pre>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Datos - Seguridad</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="./../modulos_individuales/Seguridad.html">[Seguridad]</a>
+
+        <h1>Diseño de la base de datos del Módulo</h1>
+
+        <h2>Diagrama de la base de datos</h2>
+        <img src="./../assets/TBD_Seguridad.png" alt="Diagrama de la base de datos" width="500">
+
+        <h2>Descripción de Pertinencia de la Arquitectura de la Base de Datos</h2>
+
+        <h3>Tabla usuarios</h3>
+        <h4>Campos</h4>
+        <ul>
+            <li><strong>Id_personal:</strong> <code>INT</code>. Es la clave primaria que identifica a cada usuario de manera única. Es un número entero que no puede ser nulo, garantizando que cada registro tenga un identificador.</li>
+            <li><strong>Nombre_Usuario:</strong> <code>NVARCHAR(100)</code>. Es el campo de texto que almacena el nombre de inicio de sesión. Este valor es único para cada usuario, evitando duplicados.</li>
+            <li><strong>Contraseña:</strong> <code>NVARCHAR(255)</code>. Este campo de texto guarda la contraseña del usuario. Su longitud es suficiente para almacenar un hash encriptado, lo cual es una medida de seguridad esencial.</li>
+            <li><strong>Rol:</strong> <code>NVARCHAR(50)</code>. Es un campo de texto que asigna un nivel de permisos al usuario, como "Administrador", controlando qué acciones puede realizar.</li>
+            <li><strong>Fecha_Creacion:</strong> <code>DATETIME</code>. Almacena la fecha y hora exactas en que la cuenta fue creada, un dato clave para auditar el sistema.</li>
+            <li><strong>Ultimo_Inicio_Sesion:</strong> <code>DATETIME</code>. Registra la fecha y hora del último acceso del usuario. Es útil para identificar cuentas inactivas y monitorear la actividad por motivos de seguridad.</li>
+        </ul>
+
+        <h2>Normalización de la Base de Datos</h2>
+        <p>Normalizar la tabla usuarios es un proceso que asegura la integridad de los datos y evita redundancias. Basado en la imagen que proporcionaste, la tabla ya cumple con los estándares de normalización hasta la tercera forma normal (3NF)</p>
+        
+        <h3>1NF (Primera Forma Normal)</h3>
+        <p>La tabla de usuarios está en 1NF porque cumple con dos requisitos clave:</p>
+        <ul>
+            <li><strong>Clave Primaria Única:</strong> Tiene una clave primaria, <code>ID_Personal</code>, que identifica de manera única a cada usuario. Cada fila en la tabla es distinta de las demás.</li>
+            <li><strong>Datos Atómicos:</strong> Cada campo contiene un solo valor, sin listas, arrays, o datos separados por comas. Por ejemplo, <code>Nombre_Usuario</code> almacena un solo nombre de usuario, y <code>Contrasena</code> un único valor de contraseña.</li>
+        </ul>
+        
+        <h3>Segunda y Tercera Forma Normal (2NF y 3NF)</h3>
+        <p>La tabla también cumple con 2NF y 3NF de forma inherente.</p>
+        <ul>
+            <li><strong>Ausencia de Dependencia Parcial (2NF):</strong> Para que una tabla no cumpla con 2NF, debe tener una clave primaria compuesta. Tu tabla <code>usuarios</code> tiene una clave primaria simple (<code>ID_Personal</code>), lo que significa que todos los atributos no clave (<code>Nombre_Usuario</code>, <code>Contrasena</code>, <code>Rol</code>, etc.) ya dependen por completo de la clave primaria.</li>
+            <li><strong>Ausencia de Dependencia Transitiva (3NF):</strong> No hay atributos no clave que dependan de otros atributos no clave. Cada campo, como <code>Rol</code> y <code>Fecha_Creacion</code>, depende directamente de <code>ID_Personal</code>, sin que uno dependa del otro.</li>
+        </ul>
+        
+        <h2>Código SQL para crear la tabla usuarios</h2>
+        <pre><code>
+-- Crear la tabla de usuarios
+CREATE TABLE usuarios (
+    ID_Personal INT PRIMARY KEY IDENTITY(1,1),
+    Nombre_Usuario NVARCHAR(100) NOT NULL UNIQUE,
+    Contrasena NVARCHAR(255) NOT NULL,
+    Rol NVARCHAR(50),
+    Fecha_Creacion DATETIME DEFAULT GETDATE(),
+    Ultimo_Inicio_Sesion DATETIME
+);
+        </code></pre>
+
+        <h2>Código SQL para agregar registros a las tabla</h2>
+
+        <h3>Registros de la tabla usuarios</h3>
+        <pre><code>
+-- insertar datos a la tabla usuarios - Seguridad
+INSERT INTO usuarios (Nombre_Usuario, Contrasena, Rol, Ultimo_Inicio_Sesion) VALUES 
+('ana_garcia', 'ana123', 'Administrador', '2025-09-17 11:00:00');
+INSERT INTO usuarios (Nombre_Usuario, Contrasena, Rol, Ultimo_Inicio_Sesion) VALUES 
+('carlos_lopez', 'carlos456', 'Empleado', '2025-09-16 09:15:00');
+INSERT INTO usuarios (Nombre_Usuario, Contrasena, Rol, Ultimo_Inicio_Sesion) VALUES 
+('maria_rodriguez', 'maria789', 'Empleado', '2025-09-17 14:20:00');
+INSERT INTO usuarios (Nombre_Usuario, Contrasena, Rol, Ultimo_Inicio_Sesion) VALUES 
+('pedro_sanchez', 'pedroabc', 'Invitado', '2025-09-17 07:45:00');
+INSERT INTO usuarios (Nombre_Usuario, Contrasena, Rol, Ultimo_Inicio_Sesion) VALUES 
+('laura_gomez', 'laura111', 'Empleado', NULL);
+        </code></pre>
+    </div>
+</body>
+</html>
