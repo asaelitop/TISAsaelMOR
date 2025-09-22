@@ -15,102 +15,144 @@
         <h2>Diagrama de la base de datos</h2>
         <img src="./../assets/TBD_Inventario.png" alt="Diagrama de la base de datos" width="700">
 
-        <h2>Descripción de Pertinencia de la Arquitectura de la Base de Datos</h2>
-        <p>La base de datos ha sido diseñada siguiendo las primeras tres formas normales (1NF, 2NF, 3NF) para garantizar la organización y consistencia de los datos.</p>
-
-        <h3>Tabla Inventario</h3>
+        <h3>Tabla productos</h3>
         <ul>
-            <li><strong>Id_producto:</strong> <code>int</code>. Clave primaria única. No permite valores nulos.</li>
-            <li><strong>Descripcion:</strong> <code>nvarchar(150)</code>. Texto para describir el producto.</li>
-            <li><strong>Tipo:</strong> <code>nvarchar(50)</code>. Clasificación del producto.</li>
-            <li><strong>Cantidad:</strong> <code>int</code>. Número de unidades en inventario.</li>
-            <li><strong>Peso:</strong> <code>decimal(10, 2)</code>. Almacena el peso del producto. Permite nulos.</li>
-            <li><strong>Precio_venta:</strong> <code>decimal(10, 2)</code>. Precio de venta al público.</li>
-            <li><strong>Precio_compra:</strong> <code>decimal(10, 2)</code>. Costo de adquisición. Permite nulos.</li>
-            <li><strong>Caducidad:</strong> <code>date</code>. Fecha de caducidad. Permite nulos.</li>
-            <li><strong>Marca:</strong> <code>nvarchar(50)</code>. Nombre de la marca. Permite nulos.</li>
-            <li><strong>Id_proveedor:</strong> <code>int</code>. Clave foránea que relaciona un producto con un proveedor. Permite nulos.</li>
+            <li><strong>id_producto:</strong> <code>int</code>. Este es el identificador único de cada producto. Funciona como la clave primaria de la tabla. Es un número que el sistema asigna automáticamente para diferenciar un producto de otro, por lo que no puede haber dos productos con el mismo <code>id_producto</code>. Por ejemplo, el <code>id_producto</code> 101 siempre representará al "Café Americano" y no a ningún otro producto.</li>
+            <li><strong>nombre_producto:</strong> <code>varchar</code>. Este atributo almacena el nombre legible del producto que vendes (ej. "Latte", "Pastel de Chocolate"). Es lo que verán los clientes en el menú y lo que el personal usará para identificar el producto.</li>
+            <li><strong>precio_venta:</strong> <code>Decimal</code>. Es el valor monetario por el que se vende el producto. Este dato es crucial para el módulo de Ventas, ya que el sistema lo usa para calcular el total de una compra.</li>
+            <li><strong>descripcion:</strong> <code>Text</code>. Este campo guarda una breve explicación del producto. Es útil para el personal (para conocer los detalles del producto) y para la carta o menú que se le muestra al cliente.</li>
+            <li><strong>categoria:</strong> <code>Varchar</code>. Este atributo clasifica el producto en un grupo lógico (ej. "Bebidas Calientes", "Postres", "Bebidas Frías"). La clasificación es útil para el análisis de ventas (módulo de Análisis de Ventas), para organizar la carta y para el marketing.</li>
+            <li><strong>stock_actual:</strong> <code>int</code>. Este campo registra la cantidad disponible de un producto. Si el producto es algo pre-hecho (como un pastel) o pre-empaquetado (como un sándwich), este atributo se decrementa directamente cada vez que se vende una unidad. Si es un producto que se prepara al momento (como un café), este campo puede no ser tan relevante, o se podría usar para llevar un control de un inventario físico de productos listos para servir.</li>
+            <li><strong>stock_minimo:</strong> <code>int</code>. Este atributo establece un límite mínimo para el <code>stock_actual</code>. Cuando el <code>stock_actual</code> cae por debajo de este número, el sistema puede generar una alerta para notificar al personal que es necesario reponer el producto. Esto ayuda a evitar la falta de existencias y asegura que siempre haya productos disponibles para la venta.</li>
+            
+        </ul>
+
+        <h3>Tabla ingredientes</h3>
+        <ul>
+            <li><strong>id_ingrediente:</strong> <code>int</code>. Es el identificador único de cada ingrediente (ej. el identificador del "Café Molido"). Funciona como la clave primaria de la tabla, garantizando que cada insumo sea único y que el sistema pueda referenciarlo sin ambigüedad.</li>
+            <li><strong>nombre_ingredientes:</strong> <code>varchar</code>. Este campo almacena el nombre legible del ingrediente (ej. "Leche Entera", "Azúcar"). Es la etiqueta que usas para identificar cada insumo, tanto en los reportes como en el sistema.</li>
+            <li><strong>unidad_medida:</strong> <code>varchar</code>. Define la unidad de medida en la que se registra y consume el ingrediente (ej. "gramos", "mililitros", "unidades"). Esto es vital para la tabla de Recetas, ya que la <code>cantidad_necesaria</code> debe coincidir con la unidad de medida del ingrediente.</li>
+            <li><strong>cantidad_disponible:</strong> <code>decimal</code>. Es el stock actual de ese ingrediente. Este valor se actualiza automáticamente: se decrementa cada vez que se vende un producto que lo contiene, y se incrementa cuando recibes un nuevo pedido de un proveedor.</li>
+            <li><strong>stock_minimo:</strong> <code>decimal</code>. Establece la cantidad mínima de un ingrediente que debe estar disponible. Si la <code>cantidad_disponible</code> cae por debajo de este umbral, el sistema genera una alerta para notificar que es momento de reabastecer ese ingrediente. Es una herramienta clave para evitar la escasez de insumos.</li>
+            <li><strong>proveedor_id:</strong> <code>int</code>. Es una clave foránea que se vincula con el <code>id_proveedor</code> de la tabla Proveedores. Esta relación es fundamental, ya que te permite saber qué proveedor suministra cada ingrediente, lo cual es vital para los módulos de Proveedores e Inventario (especialmente para la gestión de pedidos y reabastecimiento).</li>
+            
         </ul>
 
         <h2>Normalización de la Base de Datos</h2>
+        <p>La base de datos ha sido diseñada siguiendo las primeras tres formas normales (1NF, 2NF, 3NF) para garantizar la organización y consistencia de los datos.</p>
+
 
         <h3>1NF (Primera Forma Normal)</h3>
-        <p>Cumple con la 1FN porque cada tabla tiene un identificador único (clave primaria) y los datos en cada columna son atómicos.
+        <p>Para cumplir con 1NF, cada columna debe contener un solo valor atómico (indivisible) y no debe haber grupos de valores repetidos en una sola fila. Todas tus tablas ya cumplen con esta regla.
             <ul>
-                <li><strong>Tabla de Productos:</strong> <code>ID_producto</code> es la clave primaria y todos los campos como <code>Descripcion</code>, <code>Cantidad</code> y <code>Precio_venta</code> contienen un solo valor.</li>
-                <li><strong>Tabla de Proveedores:</strong> <code>Id_proveedor</code> es la clave principal y los atributos como <code>Nombre</code>, <code>RFC</code> y <code>Telefono</code> son atómicos.</li>
+                <li><strong>Tabla de Productos:</strong>Cada atributo, como <code>precio_venta</code> y categoria, es único para cada producto y no se repite en la misma celda.</li>
+                <li><strong>Tabla de Proveedores:</strong>Se ha dividido el nombre del proveedor en tres columnas: <code>nombre_proveedor</code>,<code>apellido_paterno</code>, y <code>apellido_materno</code>, asegurando que cada celda contenga un solo dato.</li>
+                <li><strong>Tabla de Ingredientes:</strong>Cada fila representa un ingrediente, y sus atributos (<code>nombre_ingrediente</code>, <code>unidad_medida</code>, etc.) son valores singulares.</li>
+                <li><strong>Tabla de Recetas:</strong>Los valores de <code>cantidad_necesaria</code> son atómicos, y la tabla usa una clave compuesta para garantizar que cada fila sea única, evitando la repetición de datos.</li>
             </ul>
         </p>
 
         <h3>2NF (Segunda Forma Normal)</h3>
-        <p>La base de datos cumple con la 2FN porque todos los atributos no clave dependen completamente de la clave primaria. Dado que ninguna de las tablas tiene una clave primaria compuesta, la condición se satisface.
+        <p>Para cumplir con 2NF, una tabla debe estar en 1NF y todos los atributos no clave deben depender de la clave primaria completa. Esto es relevante cuando se usa una clave primaria compuesta.
             <ul>
-                <li><strong>Tabla de Productos:</strong> Todos los atributos no clave, como <code>Descripcion</code>, <code>Precio_venta</code> y <code>Marca</code>, dependen enteramente de <code>ID_producto</code>.</li>
-                <li><strong>Tabla de Proveedores:</strong> Cada atributo no clave, como <code>Nombre</code> y <code>RFC</code>, depende completamente de la clave primaria <code>Id_proveedor</code>.</li>
+                <li><strong>Tabla de Productos:</strong>Cumple con 2NF. Su clave primaria (<code>id_producto</code>) es simple. Todos los atributos como <code>precio_venta</code> y descripcion dependen enteramente del <code>id_producto</code>.</li>
+                <li><strong>Tabla de Proveedores:</strong>Cumple con 2NF. Su clave primaria (<code>id_proveedor</code>) es simple (una sola columna), por lo que todos los demás atributos dependen de ella por definición.</li>
+                <li><strong>Tabla de Ingredientes:</strong>Cumple con 2NF. La clave primaria (<code>id_ingrediente</code>) es simple, y todos los atributos no clave dependen de ella. La clave foránea <code>proveedor_id</code> se asocia directamente con la clave primaria de la tabla de Proveedores.</li>
+                <li><strong>Tabla de Recetas:</strong>Cumple con 2NF. La clave primaria es compuesta (<code>producto_id</code>, <code>ingrediente_id</code>). El atributo <code>cantidad_necesaria</code> depende de la combinación completa de ambos IDs, no solo de uno. Es decir, no puedes determinar la cantidad si solo conoces el <code>id_producto</code> o el <code>id_ingrediente</code>; necesitas ambos.</li>
             </ul>
         </p>
 
-        <h3>3NF (Tercera Forma Normal)</h3>
-        <p>La base de datos cumple con la 3FN ya que no tiene dependencias transitivas. La información del proveedor no está duplicada en la tabla Productos; en su lugar, se utiliza la clave foránea <code>Id_proveedor</code> para la relación.</p>
+        <h3>3NF (Terecera Forma Normal)</h3>
+        <p>Para cumplir con 3NF, una tabla debe estar en 2NF y no contener dependencias transitivas. Una dependencia transitiva ocurre cuando un atributo no clave depende de otro atributo no clave en lugar de la clave primaria.
+            <ul>
+                <li><strong>Tabla de Productos:</strong>Cumple con 3NF. Cada atributo no clave (<code>nombre_producto</code>, <code>precio_venta</code>, <code>categoria</code>, etc.) depende solo del <code>id_producto</code>. No hay dependencias transitivas.</li>
+                <li><strong>Tabla de Proveedores:</strong>Cumple con 3NF. No hay atributos que dependan de otros atributos no clave. El <code>RFC</code>, <code>contacto_proveedor</code> y los nombres (<code>nombre_proveedor</code>, etc.) dependen directamente del <code>id_proveedor</code>.</li>
+                <li><strong>Tabla de Ingredientes:</strong>Cumple con 3NF. Los atributos (<code>nombre_ingrediente</code>, <code>cantidad_disponible</code>) dependen de <code>id_ingrediente</code>. La clave foránea <code>proveedor_id</code> evita que los datos del proveedor (como el nombre o el RFC) se repitan en esta tabla, eliminando una dependencia transitiva. Los datos del proveedor están en su propia tabla, donde dependen de su propia clave primaria.</li>
+                <li><strong>Tabla de Recetas:</strong>Cumple con 3NF. El único atributo no clave (<code>cantidad_necesaria</code>) depende directamente de la clave primaria compuesta. No hay atributos en esta tabla que dependan de otro atributo no clave.</li>
+            </ul>
+        </p>
 
-        <h2>Código SQL para crear la base de datos y tablas</h2>
         <pre><code>
--- Crear la base de datos y seleccionarla
-CREATE DATABASE Cafeteria;
-USE Cafeteria;
-
 -- Tabla de Proveedores
 CREATE TABLE Proveedores (
-    Id_proveedor INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre      NVARCHAR(100) NOT NULL,
-    RFC          VARCHAR(15),
-    Telefono     VARCHAR(20),
-    Foto_id      NVARCHAR(200) -- Aquí puedes guardar ruta/URL de la foto
+    id_proveedor INT PRIMARY KEY,
+    nombre_proveedor VARCHAR(50),
+    apellido_paterno VARCHAR(50),
+    apellido_materno VARCHAR(50),
+    RFC VARCHAR(20) UNIQUE,
+    contacto_proveedor VARCHAR(100)
 );
 
 -- Tabla de Productos
 CREATE TABLE Productos (
-    ID_producto  INT IDENTITY(1,1) PRIMARY KEY,
-    Descripcion  NVARCHAR(150) NOT NULL,
-    Tipo         NVARCHAR(50) NOT NULL,   -- Ej: Bebida, Ingrediente
-    Cantidad     INT NOT NULL,
-    Peso         DECIMAL(10,2),
-    Precio_venta DECIMAL(10,2) NOT NULL,
-    Precio_compra DECIMAL(10,2),
-    Caducidad    DATE,
-    Marca        NVARCHAR(50),
-    Id_proveedor INT,
-    FOREIGN KEY (Id_proveedor) REFERENCES Proveedores(Id_proveedor)
+    id_producto INT PRIMARY KEY,
+    nombre_producto VARCHAR(100),
+    precio_venta DECIMAL(10, 2),
+    descripcion TEXT,
+    categoria VARCHAR(50),
+    stock_actual INT,
+    stock_minimo INT
 );
+
+-- Tabla de Ingredientes
+CREATE TABLE Ingredientes (
+    id_ingrediente INT PRIMARY KEY,
+    nombre_ingrediente VARCHAR(100),
+    unidad_medida VARCHAR(20),
+    cantidad_disponible DECIMAL(10, 2),
+    stock_minimo DECIMAL(10, 2),
+    proveedor_id INT,
+    FOREIGN KEY (proveedor_id) REFERENCES Proveedores(id_proveedor)
+);
+
+-- Tabla de Recetas (tabla de relación)
+CREATE TABLE Recetas (
+    producto_id INT,
+    ingrediente_id INT,
+    cantidad_necesaria DECIMAL(10, 2),
+    PRIMARY KEY (producto_id, ingrediente_id),
+    FOREIGN KEY (producto_id) REFERENCES Productos(id_producto),
+    FOREIGN KEY (ingrediente_id) REFERENCES Ingredientes(id_ingrediente)
+);
+
         </code></pre>
 
         <h2>Código SQL para agregar registros a las tablas</h2>
-
-        <h3>Registros de la tabla proveedores</h3>
         <pre><code>
 -- Insertar datos en la tabla Proveedores
--- SQL Server asignará automáticamente un Id_proveedor (1, 2, 3, etc.)
-INSERT INTO Proveedores (Nombre, RFC, Telefono, Foto_id)
-VALUES
-('Distribuidora El Sol', 'DEL20250917ABC', '5512345678', 'fotos/proveedor_sol.jpg'),
-('Alimentos Frescos S.A.', 'AFR20250917XYZ', '5587654321', 'fotos/proveedor_frescos.png'),
-('Lácteos Puros', 'LAP20250917JKL', '5555555555', 'fotos/proveedor_lacteos.jpg'),
-('Granos y Cereales', 'GYC20250917QWE', '5511223344', NULL);
-        </code></pre>
+-- Se inserta información básica de proveedores de café, leche y pastelería.
+INSERT INTO Proveedores (id_proveedor, nombre_proveedor, apellido_paterno, apellido_materno, RFC, contacto_proveedor) VALUES
+(1, 'Pedro', 'García', 'López', 'GALP800101ABC', 'Gerente de Ventas'),
+(2, 'Ana', 'Martínez', 'Sánchez', 'MTSA850202DEF', 'Representante Comercial'),
+(3, 'Carlos', 'Ruiz', 'Pérez', 'RUPC900303GHI', 'Jefe de Logística');
 
-        <h3>Registros de la tabla productos</h3>
-        <pre><code>
 -- Insertar datos en la tabla Productos
--- Los Id_proveedor referenciados (1, 2, 3, etc.) deben existir en la tabla Proveedores
-INSERT INTO Productos (Descripcion, Tipo, Cantidad, Peso, Precio_venta, Precio_compra, Caducidad, Marca, Id_proveedor)
-VALUES
-('Coca-Cola 600ml', 'Bebida', 100, 0.60, 15.00, 8.50, '2026-03-31', 'Coca-Cola', 1),
-('Leche entera 1L', 'Ingrediente', 50, 1.05, 25.50, 18.00, '2025-12-25', 'Lala', 3),
-('Harina de trigo 1kg', 'Ingrediente', 75, 1.00, 30.00, 22.00, '2026-06-15', 'Tres Estrellas', 2),
-('Jugo de Naranja 500ml', 'Bebida', 120, 0.50, 12.00, 6.75, '2026-02-10', 'Del Valle', 1),
-('Frijol negro 900g', 'Ingrediente', 90, 0.90, 28.50, 19.50, '2027-01-20', 'La Costeña', 4),
-('Yogurt natural 1kg', 'Ingrediente', 40, 1.00, 35.00, 25.00, '2025-11-05', 'Danone', 3),
-('Agua embotellada 1L', 'Bebida', 200, 1.00, 10.00, 5.00, NULL, 'Bonafont', 1);
+-- Se añaden productos comunes de una cafetería con su precio, categoría y stock inicial.
+INSERT INTO Productos (id_producto, nombre_producto, precio_venta, descripcion, categoria, stock_actual, stock_minimo) VALUES
+(101, 'Café Americano', 35.00, 'Café negro tradicional', 'Bebidas Calientes', 50, 10),
+(102, 'Latte', 45.00, 'Expreso con leche al vapor', 'Bebidas Calientes', 40, 15),
+(103, 'Pastel de Chocolate', 55.00, 'Rebanada de pastel de chocolate', 'Postres', 20, 5),
+(104, 'Té de Hierbas', 30.00, 'Bebida caliente a base de hierbas', 'Bebidas Calientes', 30, 8);
+
+-- Insertar datos en la tabla Ingredientes
+-- Se registran los ingredientes que se usarán en las recetas.
+INSERT INTO Ingredientes (id_ingrediente, nombre_ingrediente, unidad_medida, cantidad_disponible, stock_minimo, proveedor_id) VALUES
+(201, 'Granos de Café', 'gramos', 10000.00, 2000.00, 1),
+(202, 'Leche Entera', 'mililitros', 50000.00, 10000.00, 2),
+(203, 'Azúcar', 'gramos', 20000.00, 5000.00, 1),
+(204, 'Chocolate en Polvo', 'gramos', 15000.00, 3000.00, 3),
+(205, 'Huevos', 'unidades', 120.00, 24.00, 3);
+
+-- Insertar datos en la tabla Recetas
+-- Se definen las recetas para cada producto, conectando productos con ingredientes.
+-- Cada fila representa un ingrediente necesario para un producto.
+INSERT INTO Recetas (producto_id, ingrediente_id, cantidad_necesaria) VALUES
+(101, 201, 10.00),  -- 10g de granos de café para un Café Americano
+(102, 201, 15.00),  -- 15g de granos de café para un Latte
+(102, 202, 250.00), -- 250ml de leche entera para un Latte
+(103, 204, 50.00),  -- 50g de chocolate para un Pastel de Chocolate
+(103, 205, 1.00);   -- 1 huevo para un Pastel de Chocolate
+
         </code></pre>
     </div>
 </body>
