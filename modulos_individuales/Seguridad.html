@@ -12,7 +12,7 @@
 
         <h1>Seguridad</h1>
         <h2>Objetivo</h2>
-        <p>Proteger la información y accesos del sistema a través de la creación, consulta, modificación y eliminación de usuarios con distintos niveles de permisos con el propósito de garantizar la integridad de los datos y evitar accesos no autorizados.</p>
+        <p>Proteger la información y accesos del sistema a través de la creación, consulta, modificación y eliminación de usuarios con distintos niveles de permisos con el propósito de garantizar la integridad de los datos y evitar accesos no autorizados al sistema.</p>
 
         <h2>Usuarios que ocupan el Modulo</h2>
         <ul>
@@ -22,12 +22,33 @@
         <h2>Requerimientos de Administrador</h2>
 
         <p>El administrador debe de ser capaz de:</p>
-        <ol>
-            <li>Crear usuarios con roles y permisos: ID Personal, Nombre, Contraseñas, Rol</li>
-            <li>Leer accesos y registros de actividad: ID Personal, Nombre, ultimo_inicio_sesion</li>
-            <li>Actualizar contraseñas y privilegios: ID Personal, Contraseñas, Rol</li>
-            <li>Eliminar cuentas inactivas: ID Personal, Último inicio de sesión</li>
-        </ol>
+        <ul>
+            <p>CREAR: Para crear un nuevo registro, se utilizan los siguientes atributos de cada tabla:</p>
+            <li><strong>Tabla usuarios:</strong> nombre, apellido_paterno, apellido_materno, nombre_usuario, contrasena_hash, email, fecha_creacion, activo.</li>
+            <li><strong>Tabla roles:</strong> nombre_rol, descripcion.</li>
+            <li><strong>Tabla usuario_rol:</strong> id_usuario, id_rol.</li>
+        </ul>
+
+        <ul>
+            <p>LEER: Solo visualizar los datos registrados si se desea :</p>
+            <li><strong>Tabla usuarios:</strong> id_usuario, nombre, fecha_creacion</li>
+            <li><strong>Tabla roles:</strong> id_rol, nombre_rol</li>
+            <li><strong>Tabla usuario_rol:</strong> id_usuario_rol, id_usuario, id_rol</li>
+        </ul>
+
+        <ul>
+            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos::</p>
+            <li><strong>Tabla usuarios:</strong> Se utiliza id_usuario para identificar el registro. Se pueden actualizar los atributos: nombre, apellido_paterno, apellido_materno, contrasena_hash, email, activo.</li>
+            <li><strong>Tabla roles:</strong> Se utiliza id_rol para identificar el registro. Se pueden actualizar los atributos: nombre_rol, descripcion.</li>
+            <li><strong>Tabla usuario_rol:</strong> iliza id_usuario_rol para identificar el registro. Se pueden actualizar los atributos: id_usuario, id_rol.</li>
+        </ul>
+
+        <ul>
+            <p>ELIMINAR: Para eliminar un registro de la base de datos, se usan los siguientes atributos:</p>
+            <li><strong>Tabla usuarios:</strong> id_usuario.</li>
+            <li><strong>Tabla roles:</strong> id_rol.</li>
+            <li><strong>Tabla usuario_rol:</strong> id_usuario_rol, id_usuario, id_rol</li>
+        </ul>
 
         <h2>Diseño de la base de datos del Módulo</h2>
         <a href="../db/infodb_seguridad.html">Base de Datos del Módulo</a>

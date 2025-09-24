@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Módulo de Inventario - Monky Café</title>
+    <title>Módulo de Inventario - Monky Coffee</title>
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
@@ -17,16 +17,27 @@
         <h2>Usuarios que ocupan el Módulo</h2>
         <ul>
             <li>Administrador</li>
+            <li>Empleado</li>
         </ul>
 
-        <h2>Requerimientos de Administrador</h2>
+        <h2>Requerimientos de Administrador y Empleado</h2>
         <p>El administrador debe ser capaz de:</p>
-        <ol>
-            <li>Crear registro de producto/ingrediente: ID producto, Descripción, Tipo, Cantidad o Peso, Precio venta, Precio compra, Caducidad, Marca, Id proveedor</li>
-            <li>Leer existencia: ID Producto, Descripción</li>
-            <li>Actualizar inventario: ID Producto, Tipo, Cantidad o Peso, Precio venta, Precio compra, Caducidad, Marca</li>
-            <li>Eliminar productos descontinuados: ID Producto</li>
-        </ol>
+        <ul>
+            <p>CREAR: Para crear un nuevo registro, se necesitan los siguientes atributos</p>
+            <li><strong>Tabla proveedores:</strong> nombre_proveedor, apellido_paterno, apellido_materno, RFC, contacto_proveedor.</li>
+            <li><strong>Tabla ingredientes:</strong> nombre_ingrediente, unidad_medida, cantidad_disponible, stock_minimo, proveedor_id.</li>
+            <li><strong>Tabla productos:</strong> nombre_producto, precio_venta, descripcion, categoria, stock_actual, stock_minimo.</li>
+            <li><strong>Tabla recetas:</strong> producto_id, ingrediente_id, cantidad_necesaria.</li>
+        </ul>
+
+        <p>El Empleado debe ser capaz de:</p>
+        <ul>
+            <p></p>
+            <li><strong>Tabla proveedores:</strong> </li>
+            <li><strong>Tabla ingredientes:</strong> </li>
+            <li><strong>Tabla productos:</strong> </li>
+            <li><strong>Tabla recetas:</strong> </li>
+        </ul>
 
         <h2>Diseño de la base de datos del Módulo</h2>
         <a href="../db/infodb_inventario.html">Base de Datos del Módulo</a>

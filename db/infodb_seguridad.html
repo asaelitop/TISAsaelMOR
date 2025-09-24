@@ -19,15 +19,22 @@
 
         <h3>Tabla usuarios</h3>
         <ul>
-            <li><strong>Id_usuario:</strong> <code>tipo de dato</code>. Es el identificador único del usuario y la clave primaria de la tabla. El sistema lo utiliza para diferenciar a cada persona, sin importar si tienen el mismo nombre.</li>
-            <li><strong></strong> <code>tipo de dato</code>. </li>
-            <li><strong></strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
-            <li><strong>:</strong> <code>tipo de dato</code>. </li>
+            <li><strong>id_usuario:</strong> <code>int</code>. Es el identificador único del usuario y la clave primaria de la tabla. El sistema lo utiliza para diferenciar a cada persona, sin importar si tienen el mismo nombre.</li>
+            <li><strong>nombre:</strong> <code>varchar</code>. Almacena el nombre de pila del usuario.</li>
+            <li><strong>apellido_paterno:</strong> <code>varchar</code>. Guarda el apellido paterno del usuario.</li>
+            <li><strong>apellido_materno:</strong> <code>varchar</code>. Guarda el apellido materno del usuario.</li>
+            <li><strong>nombre_usuario:</strong> <code>varchar</code>. Es el nombre de usuario único que la persona usará para iniciar sesión. Es un campo crucial para el proceso de autenticación.</li>
+            <li><strong>contrasena_hash:</strong> <code>varchar</code>. Almacena la contraseña cifrada del usuario. Es vital que las contraseñas nunca se guarden en texto plano; un hash irreversible protege la información del usuario en caso de una brecha de seguridad.</li>
+            <li><strong>email:</strong> <code>varchar</code>. Guarda el correo electrónico del usuario. Es útil para notificaciones o, más importante, para la recuperación de contraseña.</li>
+            <li><strong>fecha_creacion:</strong> <code>date</code>. Registra la fecha en la que se creó la cuenta del usuario. Sirve para auditoría y seguimiento.</li>
+            <li><strong>activo:</strong> <code>bit</code>. Es un indicador booleano (1 o 0) que muestra si la cuenta del usuario está activa o desactivada. Un valor de 0 puede usarse para deshabilitar temporalmente el acceso de un empleado que ya no trabaja en la cafetería.</li>
+        </ul>
+
+        <h3>Tabla roles</h3>
+        <ul>
+            <li><strong>id_rol:</strong> <code>int</code>. Es el identificador único del rol y la clave primaria de la tabla. El sistema lo usa para vincular a los usuarios a un rol específico.</li>
+            <li><strong>nombre_rol:</strong> <code>varchar</code>. Es el nombre descriptivo del rol (ej. 'Administrador', 'Gerente', 'Cajero'). Es lo que se usa para identificar el nivel de acceso de un usuario de forma clara.</li>
+            <li><strong>descripcion:</strong> <code>text</code>. Proporciona una descripción detallada de las responsabilidades o permisos asociados al rol. Por ejemplo, la descripción del rol de 'Cajero' podría indicar que tiene acceso a los módulos de Ventas y Facturación.</li>
         </ul>
 
         <h2>Normalización de la Base de Datos</h2>
@@ -45,7 +52,7 @@
         <h3>Segunda Forma Normal (2NF)</h3>
         <p>La 2NF exige que la tabla esté en 1NF y que todos los atributos no clave dependan de la clave primaria completa. Esto es relevante para tablas con claves primarias compuestas.
             <ul>
-                <li><strong>usuarios</strong> Cumple con 2NF. Su clave primaria (<code>id_usuario</code>) es una sola columna. Por lo tanto, todos los atributos no clave (<code>nombre</code>, <code>contrasena_hash</code>, <code>email</code>, etc.) dependen de la clave completa.</li>
+                <li><strong>usuarios:</strong> Cumple con 2NF. Su clave primaria (<code>id_usuario</code>) es una sola columna. Por lo tanto, todos los atributos no clave (<code>nombre</code>, <code>contrasena_hash</code>, <code>email</code>, etc.) dependen de la clave completa.</li>
                 <li><strong>roles:</strong> Cumple con 2NF. La clave primaria (<code>id_rol</code>) también es simple. Todos los atributos no clave dependen de <code>id_rol</code>.</li>
                 <li><strong>usuario_rol:</strong> Cumple con 2NF. Aunque esta tabla relaciona a Usuarios y Roles, su clave primaria (<code>id_usuario_rol</code>) es simple. Los atributos <code>id_usuario</code> e <code>id_rol</code> son claves foráneas que dependen de sus respectivas tablas y no de la clave primaria de esta tabla, lo que asegura que no haya dependencias parciales.</li>
             </ul>
