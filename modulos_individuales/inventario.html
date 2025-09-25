@@ -30,15 +30,55 @@
             <li><strong>Tabla recetas:</strong> producto_id, ingrediente_id, cantidad_necesaria.</li>
         </ul>
 
-        <p>El Empleado debe ser capaz de:</p>
         <ul>
-            <p></p>
-            <li><strong>Tabla proveedores:</strong> </li>
-            <li><strong>Tabla ingredientes:</strong> </li>
-            <li><strong>Tabla productos:</strong> </li>
-            <li><strong>Tabla recetas:</strong> </li>
+            <p>LEER: Para consultar la información de las tablas, se usan los siguientes atributos:</p>
+            <li><strong>Tabla proveedores:</strong> id_proveedor, nombre_proveedor, RFC, contacto_proveedor</li>
+            <li><strong>Tabla ingredientes:</strong> id_ingrediente, nombre_ingrediente, unidad_medida</li>
+            <li><strong>Tabla productos:</strong> id_producto, nombre_producto, precio_venta, descripcion, categoria</li>
+            <li><strong>Tabla recetas:</strong> producto_id, ingrediente_id, cantidad_necesaria.</li>
         </ul>
 
+        <ul>
+            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos:</p>
+            <li><strong>Tabla proveedores:</strong> Se usa id_proveedor para identificar. Se pueden actualizar nombre_proveedor, apellido_paterno, apellido_materno, RFC y contacto_proveedor.</li>
+            <li><strong>Tabla ingredientes:</strong> Se usa id_ingrediente para identificar. Se pueden actualizar cantidad_disponible, stock_minimo y proveedor_id.</li>
+            <li><strong>Tabla productos:</strong> Se usa id_producto para identificar. Se pueden actualizar precio_venta, descripcion, categoria, stock_actual y stock_minimo.</li>
+            <li><strong>Tabla recetas:</strong> Se usan producto_id e ingrediente_id para identificar. Se puede actualizar cantidad_necesaria.</li>
+        </ul>
+
+        <ul>
+            <p>ELIMINAR: Para borrar un registro, se usa la clave primaria de la tabla:</p>
+            <li><strong>Tabla proveedores:</strong> id_proveedor.</li>
+            <li><strong>Tabla ingredientes:</strong> id_ingrediente.</li>
+            <li><strong>Tabla productos:</strong> id_producto.</li>
+            <li><strong>Tabla recetas:</strong> producto_id e ingrediente_id.</li>
+        </ul>
+
+        <p>El Empleado debe ser capaz de:</p>
+        <ul>
+            <p>LEER: Para consultar la información de las tablas, se usan los siguientes atributos:</p>
+            <li><strong>Tabla proveedores:</strong> id_proveedor, nombre_proveedor, RFC, contacto_proveedor</li>
+            <li><strong>Tabla ingredientes:</strong> id_ingrediente, nombre_ingrediente, unidad_medida</li>
+            <li><strong>Tabla productos:</strong> id_producto, nombre_producto, precio_venta, descripcion, categoria</li>
+            <li><strong>Tabla recetas:</strong> producto_id, ingrediente_id, cantidad_necesaria.</li>
+        </ul>    
+
+        <ul>
+            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos:</p>
+            <li><strong>Tabla proveedores:</strong> Se usa id_proveedor para identificar. Se pueden actualizar nombre_proveedor, apellido_paterno, apellido_materno, RFC y contacto_proveedor.</li>
+            <li><strong>Tabla ingredientes:</strong> Se usa id_ingrediente para identificar. Se pueden actualizar cantidad_disponible, stock_minimo y proveedor_id.</li>
+            <li><strong>Tabla productos:</strong> Se usa id_producto para identificar. Se pueden actualizar precio_venta, descripcion, categoria, stock_actual y stock_minimo.</li>
+            <li><strong>Tabla recetas:</strong> Se usan producto_id e ingrediente_id para identificar. Se puede actualizar cantidad_necesaria.</li>
+        </ul>
+
+        <ul>
+            <p>ELIMINAR: Para borrar un registro, se usa la clave primaria de la tabla:</p>
+            <li><strong>Tabla proveedores:</strong> id_proveedor.</li>
+            <li><strong>Tabla ingredientes:</strong> id_ingrediente.</li>
+            <li><strong>Tabla productos:</strong> id_producto.</li>
+            <li><strong>Tabla recetas:</strong> producto_id e ingrediente_id.</li>
+        </ul>
+        
         <h2>Diseño de la base de datos del Módulo</h2>
         <a href="../db/infodb_inventario.html">Base de Datos del Módulo</a>
 
