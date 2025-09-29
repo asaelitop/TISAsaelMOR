@@ -12,7 +12,7 @@
 
         <h1>Inventario</h1>
         <h2>Objetivo</h2>
-        <p>Gestionar de manera eficiente los insumos y productos de la cafetería, permitiendo un control preciso del stock. Esto se logra mediante la automatización del registro de entradas (a través de proveedores) y salidas (por medio de las recetas), lo que asegura que siempre haya insumos disponibles para preparar los productos, evitando pérdidas y optimizando la rentabilidad.</p>
+        <p>Gestionar de manera eficiente los insumos y productos de la cafetería para que permita un control preciso del stock que se logra mediante la automatización del registro de entradas y salidas, asegurando que siempre haya insumos disponibles para preparar los productos evitando pérdidas y optimizando la rentabilidad.</p>
 
         <h2>Usuarios que ocupan el Módulo</h2>
         <ul>
@@ -23,7 +23,7 @@
         <h2>Requerimientos de Administrador y Empleado</h2>
         <h3>El administrador debe ser capaz de:</h3>
         <ul>
-            <p>CREAR: Para crear un nuevo registro, se necesitan los siguientes atributos</p>
+            <p>Crear un nuevo producto:</p>
             <li><strong>Tabla proveedores:</strong> nombre_proveedor, apellido_paterno, apellido_materno, RFC, contacto_proveedor.</li>
             <li><strong>Tabla ingredientes:</strong> nombre_ingrediente, unidad_medida, cantidad_disponible, stock_minimo, proveedor_id.</li>
             <li><strong>Tabla productos:</strong> nombre_producto, precio_venta, descripcion, categoria, stock_actual, stock_minimo.</li>
@@ -31,7 +31,7 @@
         </ul>
 
         <ul>
-            <p>LEER: Para consultar la información de las tablas, se usan los siguientes atributos:</p>
+            <p>leer la informacion registrada:</p>
             <li><strong>Tabla proveedores:</strong> id_proveedor, nombre_proveedor, RFC, contacto_proveedor</li>
             <li><strong>Tabla ingredientes:</strong> id_ingrediente, nombre_ingrediente, unidad_medida</li>
             <li><strong>Tabla productos:</strong> id_producto, nombre_producto, precio_venta, descripcion, categoria</li>
@@ -39,7 +39,7 @@
         </ul>
 
         <ul>
-            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos:</p>
+            <p>Actualizar datos registrados:</p>
             <li><strong>Tabla proveedores:</strong> Se usa id_proveedor para identificar. Se pueden actualizar nombre_proveedor, apellido_paterno, apellido_materno, RFC y contacto_proveedor.</li>
             <li><strong>Tabla ingredientes:</strong> Se usa id_ingrediente para identificar. Se pueden actualizar cantidad_disponible, stock_minimo y proveedor_id.</li>
             <li><strong>Tabla productos:</strong> Se usa id_producto para identificar. Se pueden actualizar precio_venta, descripcion, categoria, stock_actual y stock_minimo.</li>
@@ -47,7 +47,7 @@
         </ul>
 
         <ul>
-            <p>ELIMINAR: Para borrar un registro, se usa la clave primaria de la tabla:</p>
+            <p>Eliminiar registros directamente:</p>
             <li><strong>Tabla proveedores:</strong> id_proveedor.</li>
             <li><strong>Tabla ingredientes:</strong> id_ingrediente.</li>
             <li><strong>Tabla productos:</strong> id_producto.</li>
@@ -56,7 +56,7 @@
 
         <h3>El Empleado debe ser capaz de:</h3>
         <ul>
-            <p>LEER: Para consultar la información de las tablas, se usan los siguientes atributos:</p>
+            <p>Leer la informacion registrada:</p>
             <li><strong>Tabla proveedores:</strong> id_proveedor, nombre_proveedor, RFC, contacto_proveedor</li>
             <li><strong>Tabla ingredientes:</strong> id_ingrediente, nombre_ingrediente, unidad_medida</li>
             <li><strong>Tabla productos:</strong> id_producto, nombre_producto, precio_venta, descripcion, categoria</li>
@@ -64,19 +64,24 @@
         </ul>    
 
         <ul>
-            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos:</p>
-            <li><strong>Tabla proveedores:</strong> Se usa id_proveedor para identificar. Se pueden actualizar nombre_proveedor, apellido_paterno, apellido_materno, RFC y contacto_proveedor.</li>
+            <p>Actualizar los datos existentes (mediante la venta de un producto):</p>
             <li><strong>Tabla ingredientes:</strong> Se usa id_ingrediente para identificar. Se pueden actualizar cantidad_disponible, stock_minimo y proveedor_id.</li>
             <li><strong>Tabla productos:</strong> Se usa id_producto para identificar. Se pueden actualizar precio_venta, descripcion, categoria, stock_actual y stock_minimo.</li>
             <li><strong>Tabla recetas:</strong> Se usan producto_id e ingrediente_id para identificar. Se puede actualizar cantidad_necesaria.</li>
         </ul>
 
         <ul>
-            <p>ELIMINAR: Para borrar un registro, se usa la clave primaria de la tabla:</p>
-            <li><strong>Tabla proveedores:</strong> id_proveedor.</li>
+            <p>Elminiar los datos existentes (mediante una venta)</p>
             <li><strong>Tabla ingredientes:</strong> id_ingrediente.</li>
             <li><strong>Tabla productos:</strong> id_producto.</li>
             <li><strong>Tabla recetas:</strong> producto_id e ingrediente_id.</li>
+        </ul>
+
+        <ul>
+            <p>Cancelar pedidos (si es que se comete algun error que lleve a una cancelacion):</p>
+            <li><strong>Tabla recetas:</strong> producto_id, ingrediente_id, descripcion </li>
+            <li><strong>Tabla ingredientes:</strong> id_ingrediente.</li>
+            <li><strong>Tabla productos:</strong> id_producto.</li>
         </ul>
 
         <h2>Diseño de la base de datos del Módulo</h2>
