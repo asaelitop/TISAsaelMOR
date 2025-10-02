@@ -24,7 +24,7 @@
 
         <p>El administrador debe de ser capaz de:</p>
         <ul>
-            <p>Crear un registro con nueva camara de seguridad y un contacto nuevo de emergencia, o generar un reporte de forma manual si es que no se activó el boton de panico:</p>
+            <p>Crear un registro de una nueva camara de seguridad y un contacto nuevo de emergencia, o generar un reporte de forma manual si es que no se activó el boton de panico:</p>
             <li><strong>Tabla Camaras_Seguridad:</strong> id_camara, ubicacion, estado_operativo, fecha_instalacion</li>
             <li><strong>Tabla Contacto_Emergencia:</strong> id_contacto_emergencia, servicio, numero_telefonico, relacion_tipo_incidente</li>
             <li><strong>Tabla Incidentes:</strong> fecha_hora_alerta, tipo_incidente, ubicacion_alerta, descripcion_preliminar, id_camara_relacionada.</li>
@@ -38,19 +38,21 @@
             <li><strong>Tabla Incidentes:</strong> id_incidente, tipo_incidente</li>
             <li><strong>Tabla Reportes_Incidentes:</strong> id_reporte, id_incidente</li>
         </ul>
-            ______AQUÍ ME QUEDÉ______
+        
         <ul>
-            <p>ACTUALIZAR: Para modificar un registro existente, se usan los siguientes atributos::</p>
-            <li><strong>Tabla usuarios:</strong> Se utiliza id_usuario para identificar el registro. Se pueden actualizar los atributos: nombre, apellido_paterno, apellido_materno, contrasena_hash, email, activo.</li>
-            <li><strong>Tabla roles:</strong> Se utiliza id_rol para identificar el registro. Se pueden actualizar los atributos: nombre_rol, descripcion.</li>
-            <li><strong>Tabla usuario_rol:</strong> iliza id_usuario_rol para identificar el registro. Se pueden actualizar los atributos: id_usuario, id_rol.</li>
+            <p>Actualizar datos registrados para las tablas Camaras_Seguridad y Contacto_Emergencia, y si el administrador levanta un reporte de forma manual se pueden actualizar la tabla Incidentes y Reportes_Incidentes:</p>
+            <li><strong>Tabla Camaras_Seguridad:</strong> id_camara, ubicacion, estado_operativo, fecha_instalacion</li>
+            <li><strong>Tabla Contacto_Emergencia:</strong> id_contacto_emergencia, servicio, numero_telefonico, relacion_tipo_incidente</li>
+            <li><strong>Tabla Incidentes:</strong> fecha_hora_alerta, tipo_incidente, ubicacion_alerta, descripcion_preliminar, id_camara_relacionada.</li>
+            <li><strong>Tabla Reportes_Incidentes:</strong> id_incidente, descripcion_detallada, acciones_tomadas, personal_responsable, estado_reporte y fecha_cierre_reporte.</li>
         </ul>
 
         <ul>
-            <p>ELIMINAR: Para eliminar un registro de la base de datos, se usan los siguientes atributos:</p>
-            <li><strong>Tabla usuarios:</strong> id_usuario.</li>
-            <li><strong>Tabla roles:</strong> id_rol.</li>
-            <li><strong>Tabla usuario_rol:</strong> id_usuario_rol, id_usuario, id_rol</li>
+            <p>Eliminar datos registrados para las tablas Camaras_Seguridad y Contacto_Emergencia, y si el administrador levanta un reporte de forma manual se pueden actualizar la tabla Incidentes y Reportes_Incidentes:</p>
+            <li><strong>Tabla Camaras_Seguridad:</strong> id_camara</li>
+            <li><strong>Tabla Contacto_Emergencia:</strong> id_contacto_emergencia</li>
+            <li><strong>Tabla Incidentes:</strong> id_incidente</li>
+            <li><strong>Tabla Reportes_Incidentes:</strong> id_reporte</li>
         </ul>
 
         <h2>Diseño de la base de datos del Módulo</h2>
